@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("user")
+  imageUrl  String
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  likes      Like[]
+  userPoints UserPoint[]
+  comments   Comment[]
+  courses    Course[]    @relation("TeacherCourses")
+}
+
+// model Course {
+//   id                Int      @id @default(autoincrement())
+//   teacher_id        Int
+//   title             String
+//   content           String
+//   videos            String[]
+//   imgs              String[]
+//   categoryies_names String[]
+//   link_or_number    String
+//   like_count        Int      @default(0)
+
+//   categories Category[] @relation("CourseCategories")
+//   teacher    Client     @relation("TeacherCourses", fields: [teacher_id], references: [id], onDelete: Cascade)
+//   quizzes    Quiz[]
+//   comments   Comment[]
+//   likes      Like[]
+// }
+
+model Quiz {
+  id          Int        @id @default(autoincrement())
+  course_id   Int
+  title       String
+  description String
+  imgs        String[]
+  audios      String[]
+  course      Course     @relation(fields: [course_id], references: [id], onDelete: Cascade)
+  questions   Question[]
+}
+
+model Question {
+  id         Int     @id @default(autoincrement())
+  quiz_id    Int
+  content    String
+  is_correct Boolean
+
+  quiz Quiz @relation(fields: [quiz_id], references: [id], onDelete: Cascade)
+}
+
+model UserPoint {
+  id      Int @id @default(autoincrement())
+  user_id Int
+  points  Int @default(0)
+
+  user Client @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  id        Int     @id @default(autoincrement())
+  course_id Int
+  client_id Int
+  course    Course  @relation(fields: [course_id], references: [id], onDelete: Cascade)
+  client    Client  @relation(fields: [client_id], references: [id], onDelete: Cascade)
+
+  @@unique([course_id, client_id])
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  client_id  Int
+  course_id  Int
+  content    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  client Client @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [course_id], references: [id], onDelete: Cascade)
+}
+
+// model Category {
+//   id        Int                @id @default(autoincrement())
+//   course_id Int
+//   courses   Course[]           @relation("CourseCategories")
+//   language  Language_Category?
+
+//   @@unique([course_id])
+// }
+
+// model Language_Category {
+//   id          Int      @id @default(autoincrement())
+//   category_id Int      @unique
+//   uz_name     String
+//   ru_name     String
+//   ua_name     String
+//   category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+// }
+
+// enum Role {
+//   user
+//   teacher
+//   admin
+// }
+model Category {
+  id          Int                @id @default(autoincrement())
+  uz_name     String
+  ru_name     String
+  ua_name     String
+  courseLinks CategoryCourse[]
+}
+
+model Course {
+  id                Int      @id @default(autoincrement())
+  teacher_id        Int
+  title             String
+  content           String
+  videos            String[]
+  imgs              String[]
+  categoryies_names String[]
+  link_or_number    String
+  like_count        Int      @default(0)
+
+  courseLinks CategoryCourse[]
+  teacher     Client           @relation("TeacherCourses", fields: [teacher_id], references: [id], onDelete: Cascade)
+  quizzes     Quiz[]
+  comments    Comment[]
+  likes       Like[]
+}
+
+model CategoryCourse {
+  categoryId Int
+  courseId   Int
+
+  category Category @relation(fields: [categoryId], references: [id])
+  course   Course   @relation(fields: [courseId], references: [id])
+
+  @@id([categoryId, courseId])
+}

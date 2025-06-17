@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forgot Password</title>
+  <link rel="stylesheet" href="../css/forgot.css" />
+</head>
+<body>
+  <div class="container">
+    <form class="e-form" action="http://localhost:3000/auth/email" method="post">
+      <h1>Enter Email</h1>
+      <input type="text" name="email" id="email" placeholder="example@mail.com" required />
+      <button type="submit">Send</button>
+    </form>
+
+    <form class="f-form hidden" action="http://localhost:3000/auth/forgotpassword" method="post">
+      <h1>Reset Password</h1>
+      <input type="text" name="token" id="token" placeholder="Token" required />
+      <input type="text" name="password" id="password" placeholder="New Password" required />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+<script type="module" src="../js/forgot.js"></script>    
+</body>
+</html>

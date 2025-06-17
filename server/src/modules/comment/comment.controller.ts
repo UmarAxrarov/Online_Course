@@ -6,6 +6,7 @@ import {
     Patch,
     Post,
     ParseIntPipe,
+    Req,
 } from "@nestjs/common";
 import { CommentService } from "./comment.service";
 import { createDto } from "./crud.dto";
@@ -15,16 +16,18 @@ import { Roles } from "src/decorators/role.decorator";
 @Controller("comment")
 export class CommentController {
     constructor(private readonly commentService: CommentService) { }
-    @Protected(false)
+    @Protected(true)
     @Roles(['user'])
-    @Post("create/:ci/:cui")
+    @Post("create/:course_id")
     async createComment(
-        @Param("ci", ParseIntPipe) ci: number,
-        @Param("cui", ParseIntPipe) cui: number,
+        @Req() req: Request & { id: number },
+        @Param("course_id", ParseIntPipe) cui: number,
         @Body() body: createDto
     ) {
-        return this.commentService.create({ param: { ci, cui }, body });
+        
+        return this.commentService.create({ param: { ci: req.id, cui }, body });
     }
+
     @Protected(false)
     @Roles(['user'])
     @Delete("delete/:id")

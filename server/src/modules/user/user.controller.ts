@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, ParseIntPipe, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, ParseIntPipe, Post, Query, Req, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { Protected } from "src/decorators/protected.decorator";
 import { Roles } from "src/decorators/role.decorator";
 import { CreateDto, findAllDto, UpdateDto } from "./crud.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiConsumes } from "@nestjs/swagger";
+import { ClientRoles } from "src/enum/roles.enum";
 
 @Controller("user")
 export class UserController {
@@ -26,11 +27,13 @@ export class UserController {
     async findAll(@Query() q: findAllDto) {
         return this.service.findAll({ query: q })
     }
-    @Get("find/:id")
-    @Protected(false)
-    @Roles(['user'])
-    async findOne(@Param('id', ParseIntPipe) id: number) {
-        return this.service.findOne({ param: { id } })
+    @Get('me')
+    @Protected(true)
+    @Roles([ClientRoles.USER, ClientRoles.TEACHER, ClientRoles.ADMIN])
+    async getMyProfile(@Req() req: Request & { id: number }) {
+        console.log(req.id);
+        
+        return this.service.findOne({ param: { id: req.id } });
     }
     @Delete("delete/:id")
     @Protected(false)

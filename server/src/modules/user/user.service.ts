@@ -3,9 +3,10 @@ import { PrismaService } from "src/prisma";
 import { CreateDto, findAllDto } from "./crud.dto";
 import { FsHelper } from "src/helpers/fs.helper";
 import * as bcrypt from "bcryptjs";
+import { RedisService } from "redis/redise.service";
 @Injectable()
 export class UserService {
-    constructor(private prisma: PrismaService, private fs: FsHelper) { }
+    constructor(private prisma: PrismaService, private fs: FsHelper,private redis:RedisService) { }
     async create(payload: { body: CreateDto }) {
         try {
             const newUser = await this.prisma.client.update({
@@ -41,7 +42,16 @@ export class UserService {
     async findOne(payload: { param: { id: number } }) {
         const data = payload.param;
         try {
-            const user = await this.prisma.client.findFirst({
+            let user_:any = null;
+            user_ = await this.redis.get('users');
+            if(user_) {
+                console.log("user_");
+                
+                return JSON.parse(user_);
+            }
+            console.log(data);
+            
+            user_ = await this.prisma.client.findFirst({
                 where: {
                     id: data.id
                 },
@@ -56,12 +66,19 @@ export class UserService {
                         }
                     },
                     comments: true,
-                    likes: true,
+                    likes: {
+                        include: {
+                            course:true
+                        }
+                    },
                     userPoints: true,
                 }
             })
-            return user;
+            await this.redis.set('users',JSON.stringify(user_),30);
+            console.log(user_);
+            return user_;
         } catch (error) {
+            console.log("buu errro", error)
             throw new BadRequestException(error.message);
         }
     }
@@ -73,6 +90,7 @@ export class UserService {
         }
         this.fs.removeImage(user.imageUrl)
         try {
+
             await this.prisma.client.delete({ where: { id: data.id } });
             return "deleted";
         } catch (error) {

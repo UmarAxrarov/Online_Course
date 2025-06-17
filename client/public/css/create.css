@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #fff5f5;
+  color: #990000;
+  display: flex;
+}
+
+/* Sidebar (navbar) */
+.navbar {
+  width: 220px;
+  background-color: #ffcccc;
+  padding: 20px 15px;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.navbar-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-item a {
+  display: block;
+  padding: 10px 15px;
+  color: #990000;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.navbar-item a:hover {
+  background-color: #ff9999;
+  color: #fff;
+}
+
+/* Main content */
+.container {
+  flex-grow: 1;
+  padding: 30px;
+  background-color: #fff0f0;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow-y: auto;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* max-width: 500px; */
+  margin: 0 auto;
+}
+
+input[type="text"],
+input[type="file"] {
+  padding: 10px;
+  border: 1px solid #990000;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+button {
+  padding: 10px;
+  background-color: #990000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #cc0000;
+}
+
+#responseText {
+  margin-top: 15px;
+  text-align: center;
+}
+/* Добавь это в начало файла: */
+.layout {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* остальной CSS (navbar, container и т.д.) можешь оставить как есть */

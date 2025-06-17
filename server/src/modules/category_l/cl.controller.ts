@@ -3,12 +3,13 @@ import { LanguageCategoryService } from './cl.service';
 import { cDto } from './crud.dto';
 import { Protected } from 'src/decorators/protected.decorator';
 import { Roles } from 'src/decorators/role.decorator';
+import { ClientRoles } from 'src/enum/roles.enum';
 
 @Controller('language-category')
 export class LanguageCategoryController {
     constructor(private readonly langCatService: LanguageCategoryService) { }
     @Protected(false)
-    @Roles(['user'])
+    @Roles(["user"])
     @Post()
     create(@Body() body: cDto) {
         return this.langCatService.create(body);

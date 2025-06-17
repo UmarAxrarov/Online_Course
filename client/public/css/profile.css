@@ -1,0 +1,184 @@
+/* General reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  height: 100vh;
+  background-color: #fff5f5;
+  color: #990000;
+  display: flex;
+}
+
+/* Navbar (sidebar) */
+.navbar {
+  width: 220px;
+  background-color: #ffcccc;
+  padding: 20px 15px;
+  flex-shrink: 0;
+}
+
+.navbar-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.navbar-item a {
+  display: block;
+  padding: 10px 15px;
+  color: #990000;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.navbar-item a:hover {
+  background-color: #ff9999;
+  color: #fff;
+}
+
+/* Main content */
+.global {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  max-width: 100%;
+}
+
+.profile-parent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.profile-div {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-img {
+  width: 60px;
+  height: 60px;
+  background-color: #ff9999;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-size: 24px;
+}
+
+.profile-email {
+  color: #990000;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.logout-btn {
+  padding: 10px 15px;
+  background-color: #cc0000;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #990000;
+}
+
+/* Tables section */
+.tables-list {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.tables-list li {
+  padding: 8px 12px;
+  background-color: #ffd6d6;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tables-list li:hover {
+  background-color: #ff9999;
+  color: white;
+}
+
+/* Courses */
+.courses {
+  padding: 15px;
+  background-color: #fff0f0;
+  border-radius: 10px;
+  border: 1px solid #ff6666;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.teacher-info {
+  margin-bottom: 10px;
+}
+
+.course {
+  padding: 15px;
+  background-color: #ffe5e5;
+  border-radius: 6px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.likes-count {
+  display: inline-block;
+  margin-top: 10px;
+  color: #b30000;
+  font-weight: bold;
+}
+
+.img-videos-div {
+  width: 100%;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.swiper {
+  width: 100%;
+  height: 500px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffe6e6;
+}
+
+.swiper-slide img,
+.swiper-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Предотвращение переполнения */
+.course h2,
+.course p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}

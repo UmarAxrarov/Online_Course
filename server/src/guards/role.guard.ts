@@ -10,9 +10,12 @@ export class RolesGuard implements CanActivate {
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         const roles = this.reflector.getAllAndOverride<ClientRoles[]>(ROLES_KEY,[context.getClass(),context.getHandler()]);
         const request = context.switchToHttp().getRequest();
+        console.log(request.role);
+        
         if(!roles.includes(request.role)) {
             throw new NotAcceptableException("ruhsat yoq");
         }
+        
         return true;
     }
 }

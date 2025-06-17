@@ -20,6 +20,8 @@ import { CategoryModule } from './modules/category/category.module';
 import { LanguageCategoryModule } from './modules/category_l/category_language.module';
 import { LikeModule } from './modules/like.module';
 import { UPointModule } from './modules/user_point.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { RedisModule } from '@nestjs-modules/ioredis';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,6 +32,22 @@ import { UPointModule } from './modules/user_point.module';
       serveRoot: '/uploads',
       serveStaticOptions: {
         index: false,
+      }
+    }),
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.gmail.com',
+        auth: {
+          user:process.env.GMAIL_USER,
+          pass:process.env.GMAIL_PASS
+        }
+      }
+    }),
+    RedisModule.forRoot({
+      type:"single",
+      options:{
+        host:"localhost",
+        port:6379
       }
     }),
     PrismaModule,

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Course</title>
+  <link rel="stylesheet" href="../css/create.css" />
+</head>
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <div class="navbar">
+      <ul class="navbar-list">
+        <li class="navbar-item"><a href="index.html">Home</a></li>
+        <li class="navbar-item"><a href="profile.html">Profile</a></li>
+        <li class="navbar-item"><a href="userpoints.html">User Points</a></li>
+        <li class="navbar-item"><a href="create.html">Create Course</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+      <h1>Create Course</h1>
+      <form id="createForm">
+        <input type="text" name="title" placeholder="Title" required />
+        <input type="text" name="content" placeholder="Content" required />
+        <input type="text" name="categories_names" placeholder="Categories" required />
+        <input type="text" name="link_or_number" placeholder="Link or Number" required />
+
+        <label>Images (up to 5):</label>
+        <input type="file" name="images" multiple accept="image/*" />
+
+        <label>Videos (up to 2):</label>
+        <input type="file" name="videos" multiple accept="video/*" />
+
+        <button type="submit">Create</button>
+      </form>
+      <p id="responseText"></p>
+    </div>
+  </div>
+
+  <script src="../js/create.js"></script>
+</body>
+
+</html>

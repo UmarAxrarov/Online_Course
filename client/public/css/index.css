@@ -1,0 +1,261 @@
+/* Reset va umumiy sozlamalar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  background-color: #fff5f5;
+  color: #990000;
+}
+
+/* Sidebar (chap panel) */
+.navbar {
+  width: 220px;
+  background-color: #ffcccc;
+  padding: 20px 15px;
+}
+
+.navbar-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.navbar-item {
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.navbar-item a {
+text-decoration: none;
+  transition: color 0.3s;
+  color: #b30000;
+}
+
+.navbar-item a:hover {
+    color: white;
+}
+.navbar-item:hover {
+  background-color: #ff9999;
+}
+
+.navbar-item.clicked {
+  background-color: #cc0000;
+  color: #fff;
+}
+
+/* Asosiy qism */
+.global {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background-color: #ffe5e5;
+  flex-wrap: wrap;
+}
+
+.icon-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ff9999;
+}
+
+.header-list {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+}
+
+.header-item {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.header-item:hover {
+  background-color: #ffcccc;
+}
+
+.language-parent {
+  display: flex;
+  gap: 10px;
+}
+
+.language-child {
+  padding: 6px 10px;
+  border: 1px solid #ff0000;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.language-child:hover,
+.language-child:focus {
+  background-color: #ffb3b3;
+  color: white;
+}
+
+/* Main */
+.main {
+  padding: 20px;
+}
+
+.course-global {
+  max-width: 900px;
+  margin: auto;
+}
+
+.teacher-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.teacher-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ff9999;
+}
+
+.course {
+  background-color: #fff0f0;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #ff6666;
+}
+
+.course-messages-div {
+  margin-top: 15px;
+  position: relative;
+}
+
+.toggle-message {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #b30000;
+  position: absolute; 
+  bottom: 20px;
+  right: 5px;
+}
+
+.message-div {
+  display: none;
+  margin-top: 10px;
+  align-items: center;
+  background-color: white;
+  padding: 10px;
+  
+  gap: 10px;
+}
+.message-img {
+  width: 30px;
+  height: 30px;
+  background-color: #ff9999;
+  border-radius: 50%;
+}
+
+.quizz-div {
+  margin-top: 20px;
+}
+
+.quizz-img {
+  width: 100%;
+  height: 200px;
+  background-color: #ffd6d6;
+  object-fit: cover;
+}
+
+.quizz-title {
+  margin: 10px 0 5px;
+}
+
+.quizz-audio {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.question-div {
+  margin-top: 15px;
+}
+
+.qusetion-input {
+  margin-right: 10px;
+  accent-color: #cc0000;
+}
+
+.likes-and-info-teacher {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.teacher-tel {
+  color: #b30000;
+  text-decoration: none;
+}
+
+.teacher-tel:hover {
+  text-decoration: underline;
+}
+
+.like-div {
+  cursor: pointer;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.like-div:hover {
+  color: #cc0000;
+}
+
+.like-div.liked {
+  color: #cc0000;
+}
+.img-videos-div {
+  width: 100%;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.swiper {
+  width: 100%;
+  height: 500px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffe6e6;
+}
+
+.swiper-slide img,
+.swiper-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}

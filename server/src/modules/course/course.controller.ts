@@ -6,15 +6,12 @@ import { Protected } from "src/decorators/protected.decorator";
 import { Roles } from "src/decorators/role.decorator";
 import { MultipleFilesValidatorPipe } from "src/pipes/files.pipe";
 import { ApiBearerAuth, ApiBody, ApiConsumes } from "@nestjs/swagger";
+import { ClientRoles } from "src/enum/roles.enum";
 
 @Controller("course")
 @ApiBearerAuth()
 export class CourseController {
     constructor(private service: CourseService) { }
-    @Post('create/:id')
-    @Protected(false)
-    @Roles(["user"])
-    @ApiConsumes('multipart/form-data')
     @ApiBody({
         schema: {
             type: 'object',
@@ -40,6 +37,10 @@ export class CourseController {
             },
         },
     })
+    @Post('create/:id')
+    @Protected(true)
+    @Roles([ClientRoles.TEACHER,ClientRoles.ADMIN])
+    @ApiConsumes('multipart/form-data')
     @UseInterceptors(
         FileFieldsInterceptor([
             { name: 'images', maxCount: 5 },
@@ -68,7 +69,7 @@ export class CourseController {
     }
     @Get()
     @Protected(false)
-    @Roles(["user"])
+    @Roles([ClientRoles.USER,ClientRoles.ADMIN,ClientRoles.TEACHER])
     async findAll(@Query() query: findAllDto) {
         return await this.service.findAll({ query: query })
     }

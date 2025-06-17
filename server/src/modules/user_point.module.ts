@@ -18,25 +18,6 @@ class UPointService {
             throw new BadRequestException(error.message)
         }
     }
-    async findAll() {
-        try {
-            const likes = await this.prisma.userPoint.findMany({ include: { user:true } });
-            return likes;
-        } catch (error) {
-            throw new BadRequestException(error.message)
-        }
-    }
-    async delete(id: number) {
-        try {
-            const like = await this.prisma.userPoint.findFirst({ where: { user_id:id } })
-            if (like) {
-                await this.prisma.userPoint.delete({ where: { id: like.id } })
-                return "deleted";
-            }
-        } catch (error) {
-            throw new BadRequestException(error.message)
-        }
-    }
 }
 @Controller('userpoint')
 class UPointController {
@@ -46,18 +27,6 @@ class UPointController {
     @Roles(["user"])
     async create(@Param('client_id', ParseIntPipe) id: number,@Body() body:{userpoint:number}) {
         return this.service.create(id, body.userpoint);
-    }
-    @Get()
-    @Protected(false)
-    @Roles(["user"])
-    async findAll() {
-        return await this.service.findAll();
-    }
-    @Delete('delete/:client_id')
-    @Protected(false)
-    @Roles(["user"])
-    async delete(@Param('client_id', ParseIntPipe) id: number) {
-        return await this.service.delete(id);
     }
 }
 

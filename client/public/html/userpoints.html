@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Points</title>
+  <link rel="stylesheet" href="../css/userpoints.css" />
+</head>
+<body>
+
+  <!-- Sidebar -->
+ <div class="navbar">
+      <ul class="navbar-list">
+        <li class="navbar-item"><a href="index.html">Home</a></li>
+        <li class="navbar-item"><a href="profile.html">Profile</a></li>
+        <li class="navbar-item"><a href="userpoints.html">User Points</a></li>
+        <li class="navbar-item"><a href="create.html">Create Course</a></li>
+      </ul>
+    </div>
+
+  <!-- Main content -->
+  <div class="global">
+    <div class="points-table-container">
+      <h1 class="table-title">User Points Leaderboard</h1>
+      <table class="points-table">
+        <thead>
+          <tr>
+            <th>IMG</th>
+            <th>Name</th>
+            <th>Points</th>
+            <th>Sticker</th>
+          </tr>
+        </thead>
+        <tbody id="points-body">
+          <!-- Dynamically filled with JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="../js/userpoints.js" type="module"></script>
+</body>
+</html>

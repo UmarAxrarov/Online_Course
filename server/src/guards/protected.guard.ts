@@ -13,7 +13,7 @@ import { JwtHelper } from "src/helpers/jwt.helper";
 
 @Injectable()
 export class ProtectedGuard implements CanActivate {
-  constructor(private reflector: Reflector, private jwt: JwtHelper) {}
+  constructor(private reflector: Reflector, private jwt: JwtHelper) { }
 
   async canActivate(
     context: ExecutionContext
@@ -45,20 +45,19 @@ export class ProtectedGuard implements CanActivate {
     const refreshToken = refreshHeader.split(" ")[1];
 
     const result = this.jwt.verifyTokens({ accessToken, refreshToken });
-
-    if ("id" in result) {
+    console.log(result);
+    if ("accessToken" in result && "refreshToken" in result) {
       request.id = result.id;
       request.role = result.role;
+      response.setHeader("x-access-token", result.accessToken);
+      response.setHeader("x-refresh-token", result.refreshToken);
       return true;
     }
 
-    if ("accessToken" in result && "refreshToken" in result) {
-    const decoded = this.jwt.verifyTokens({accessToken: result.accessToken, refreshToken: result.refreshToken});
-    request.id = decoded.accessToken.id;
-    request.role = decoded.accessToken.role;
-    response.setHeader("x-access-token", result.accessToken);
-    response.setHeader("x-refresh-token", result.refreshToken);
-    return true;
+    if ("id" in result && "role" in result) {
+      request.id = result.id;
+      request.role = result.role;
+      return true;
     }
 
     throw new ConflictException("Tokenlarni tekshirishda xatolik");

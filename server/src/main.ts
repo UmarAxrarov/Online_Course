@@ -4,29 +4,36 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as morgan from "morgan";
 import { BadRequestException, NotAcceptableException, ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule,{logger:false});
-  app.setGlobalPrefix("/api");
+  const app = await NestFactory.create(AppModule, { logger: false });
+  // app.setGlobalPrefix("/api");
   app.enableCors({
-    allowedHeaders: ['authorization','authorization_refresh'],
-    methods: ['GET','POST','PATCH','PUT','DELETE'],
-    origin: (reqOrigin:string,cb) => {
-      const allowedOrigins:string[] = process.env.CORS_ORIGNS
-      ? process.env.CORS_ORIGNS.split(',')
-      : ['*']; 
-      if(allowedOrigins.includes(reqOrigin) || allowedOrigins.includes('*')) {
-        cb(null,reqOrigin)
+    allowedHeaders: ['authorization', 'authorization_refresh', 'Content-Type'],
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+    origin: (reqOrigin: string | undefined, cb) => {
+      const allowedOrigins: string[] = process.env.CORS_ORIGINS
+        ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
+        : [];
+      if (allowedOrigins.includes('*')) {
+        return cb(null, true);
+      }
+      if (!reqOrigin) {
+        return cb(new NotAcceptableException(`Origin yo‘q, so‘rov rad etildi`), false);
+      }
+      if (allowedOrigins.includes(reqOrigin)) {
+        cb(null, true);
       } else {
-        cb(new NotAcceptableException(`${reqOrigin} sorov ruhsat yoq`))
+        cb(new NotAcceptableException(`${reqOrigin} so‘rovga ruxsat yo‘q`), false);
       }
     }
-  })
+  });
+
   app.useGlobalPipes(new ValidationPipe({
-    whitelist:true,
-    transform:true,
+    whitelist: true,
+    transform: true,
     exceptionFactory(errors) {
-      const errorsMsgs:string[] = [];
+      const errorsMsgs: string[] = [];
       errors.forEach((obj) => {
-        if(obj.constraints) errorsMsgs.push(Object.values(obj.constraints).join(","));
+        if (obj.constraints) errorsMsgs.push(Object.values(obj.constraints).join(","));
       })
       throw new BadRequestException(errorsMsgs.join(", "));
     },
@@ -38,12 +45,11 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  if(process.env.NODE_ENV?.trim() === "development") {  
+  if (process.env.NODE_ENV?.trim() === "development") {
     app.use(morgan('tiny'));
     SwaggerModule.setup('docs', app, documentFactory);
-  } 
+  }
   const port = parseInt(process.env.PORT as string) | 3000;
-  await app.listen(port,() => console.log("Server",port));
+  await app.listen(port, () => console.log("Server", port));
 }
 bootstrap();
- 

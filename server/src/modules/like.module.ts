@@ -14,7 +14,17 @@ class LikeService {
         }
         try {
             const newLike = await this.prisma.like.create({ data: { client_id, course_id } })
-            return newLike
+            let count:number = 0;
+            if(newLike) {
+                count += 1; 
+            }
+            await this.prisma.course.update({
+                where:{id:course_id},
+                data:{
+                    like_count: count
+                }
+            })
+            return newLike;
         } catch (error) {
             throw new BadRequestException(error.message)
         }
